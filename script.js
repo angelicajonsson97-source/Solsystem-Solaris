@@ -33,7 +33,7 @@ async function init() {
     const oldError = document.getElementById("errorBox");
     if (oldError) oldError.remove();
 
-    const errorBox = document.createElement("div");
+    const errorBox = document.createElement("section");
     errorBox.id = "errorBox";
     errorBox.style.background = "rgba(255,0,0,0.1)";
     errorBox.style.color = "#ff5555";
