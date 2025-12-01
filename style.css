@@ -13,13 +13,13 @@ body {
 h1 {
   text-align: right;
   margin: 2rem 1.25rem 0.5rem 0;
-  font-size: 3rem;
+  font-size: 2.5rem;
   letter-spacing: 0.5rem;
 }
 h3 {
   text-align: right;
   margin: 0.5rem 1.25rem 2rem 0;
-  font-size: 2.0rem;
+  font-size: 1.5rem;
   letter-spacing: 0.5rem;
   color: #8b6e27;
 }
@@ -46,38 +46,58 @@ h3 {
 }
 
 .sun {
+  position: absolute; 
+  left: -50%;  
   background: radial-gradient(circle, #FFD700 60%, #FFA500 100%);
   box-shadow: 0 0 30px 10px #ffcc00;
-  width: 320px;
-  height: 320px;   
+  width: 800px;
+  height: 800px; 
+ 
 
 }
 
-.merkurius { background: #8C8B85; width: 20px; height: 20px; }
-.venus     { background: #E7CDCB;   width: 30px; height: 30px; }
-.jorden    { background: #428ED4;   width: 55px; height: 55px; }
-.mars      { background: #EF5F5F;   width: 45px; height: 45px; }
-.jupiter   { background: #E29468;   width: 120px; height: 120px; }
-.saturnus  { background: #C7AA72;   width: 80px; height: 80px; }
-.uranus    { background: #C9D4F1;   width: 60px; height: 60px; }
-.neptunus  { background: #7A91A7;   width: 60px; height: 60px; }
+.merkurius {background: #8C8B85; width: 1rem ;height: 1rem; margin-left: 5rem;}
+.venus { background: #E7CDCB; width: 2.2rem; height: 2.2rem;}
+.jorden {background: #428ED4; width: 2.3rem; height: 2.3rem;}
+.mars {background: #EF5F5F; width: 1.5rem; height: 1.5rem;}
+.jupiter {background: #E29468; width: 12rem; height: 12rem;}
+.saturnus {background: #C7AA72; width: 11rem; height: 11rem;}
+.uranus {background: #C9D4F1; width: 7.5rem; height: 7.5rem;}
+.neptunus {background: #7A91A7; width: 7rem; height: 7rem;}
 
-/* Saturn's ring effect */
+/* ring effect */
 .saturnus {
   position: relative;
 }
 
-.saturnus::before {
+.saturnus::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 11.1rem;  
+  height: 1.5rem;  
+  border: 2.5rem solid #c7ab72c6; 
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(20deg);
+}
+
+.uranus {
+  position: relative;
+}
+
+.uranus::after {
   content: "";
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 150%;
-  height: 40%;
-  border: 2px solid #C7AA72;
+  width: 10rem;   /* lite större än planeten */
+  height: 2rem;
+  border: 0.5rem solid #c9d4f19c;
   border-radius: 50%;
   opacity: 0.6;
+  transform: translate(-50%, -50%);
 }
+
 
 /* Overlay styles */
 #overlay {
@@ -118,8 +138,19 @@ h3 {
   gap: 1.5rem;
   backdrop-filter: blur(8px);
   max-height: 90vh;          /* Begränsa höjden */
-  overflow-y: auto;          /* Scroll inne i rutan */
+  overflow-y: auto;          /* Gör innehållet scrollbart vid behov */
 }
+
+/* Scrollbar styling */
+#overlayContent::-webkit-scrollbar {
+  width: 6px;
+}
+#overlayContent::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 3px;
+}
+
+
 
 /* Titelblock */
 .overlay-header {
