@@ -80,23 +80,24 @@ h3 {
 }
 
 /* Overlay styles */
+#overlay {
+  visibility: hidden;
+  opacity: 0;
+}
 /* Overlay container */
 #overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, #0b1d3a 0%, #000 0.6);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(ellipse at center, rgba(11,29,58,0.7) 0%, rgba(0,0,0,0.6) 90%);
   display: flex;
-  align-items: center;
+  align-items: flex-start;   /* Lägg rutan högst upp istället för mitt */
   justify-content: center;
-  z-index: 1000;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  overflow-y: auto;          /* Gör att hela overlayen kan scrollas */
   padding: 2rem;
+  z-index: 1000;
 }
+
 
 #overlay.active {
   visibility: visible;
@@ -105,17 +106,19 @@ h3 {
 
 /* Overlay content box */
 #overlayContent {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.05);
   color: white;
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
-  max-width: 80vh;
-  overflow-y: auto;
+  max-width: 900px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   backdrop-filter: blur(8px);
+  max-height: 90vh;          /* Begränsa höjden */
+  overflow-y: auto;          /* Scroll inne i rutan */
 }
 
 /* Titelblock */
@@ -124,14 +127,14 @@ h3 {
 }
 
 #planetName {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   letter-spacing: 0.3rem;
   text-transform: uppercase;
   margin: 0;
 }
 
 #planetLatin {
-  font-size: 2.0rem;
+  font-size: 1.2rem;
   letter-spacing: 0.3rem;
   font-weight: 400;
   color: #8b6e27;
@@ -140,7 +143,7 @@ h3 {
 
 /* Description */
 #planetDesc {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   color: #f3eeee;
   margin: 0;
@@ -154,7 +157,7 @@ h3 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem 2rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #f7f0f0;
 }
 
