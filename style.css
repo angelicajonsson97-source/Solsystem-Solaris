@@ -110,8 +110,8 @@ h3 {
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
-  max-width: 900px;
-  width: 100%;
+  max-width: 80vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
