@@ -67,7 +67,7 @@ function renderBodies(bodies) {
   bodies.forEach(body => {
     if (!body?.name || !body?.type) return;
 
-    const element = document.createElement("div");
+    const element = document.createElement("span");
 
     // Lägg till klasser baserat på typ och namn
     element.classList.add(
