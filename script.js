@@ -1,28 +1,35 @@
 async function init() {
   try {
-    // steg 1 - hämta nyckel till API:et
+    // hämta nyckel till API:et
     const keyResp = await fetch('https://4a6l0o1px9.execute-api.eu-north-1.amazonaws.com/key');
     const keyData = await keyResp.json();
     const solarisKey = keyData.key;
 
+    // visa nyckeln i konsolen
     console.log('Key:', solarisKey);
 
-     // steg 2 - hämta data om himlakroppar
+     // hämta data om himlakroppar
     const resp = await fetch('https://corsproxy.io/?https://4a6l0o1px9.execute-api.eu-north-1.amazonaws.com/bodies?errorcode=true', {
       method: 'GET',
       headers: { 'x-zocom': solarisKey }
     });
 
+
+  // Konvertera API-svaret till ett JavaScript-objekt
+  // Logga hela svaret i konsolen för felsökning
     const bodiesData = await resp.json();
     console.log("API response:", bodiesData);
 
+    // Kontrollera om svaret innehåller en bodies-array
     const bodiesArray = Array.isArray(bodiesData) ? bodiesData : bodiesData.bodies;
     if (!Array.isArray(bodiesArray)) {
-      throw new Error("API-svaret innehåller ingen bodies-array");
+      throw new Error("API innehåller ingen bodies-array");
     }
 
+  // Rendera himlakropparna
     renderBodies(bodiesArray);
 
+  // Error-hantering
   } catch (err) {
     console.error("Fel i init:", err);
 
@@ -33,6 +40,7 @@ async function init() {
     const oldError = document.getElementById("errorBox");
     if (oldError) oldError.remove();
 
+    // style felruta
     const errorBox = document.createElement("section");
     errorBox.id = "errorBox";
     errorBox.style.background = "rgba(255,0,0,0.1)";
@@ -49,24 +57,26 @@ async function init() {
       <button id="retryBtn">Hämta igen</button>
     `;
 
+    // Lägg till felruta
     container.appendChild(errorBox);
 
+    // Lägg till klick-händelse för retry-knappen
     document.getElementById("retryBtn").addEventListener("click", () => {
       errorBox.remove();
       init(); // kör om init
     });
   }
 }
-
+// Rendera himlakroppar från data
 function renderBodies(bodies) {
   const container = document.getElementById("planetContainer");
   if (!container) return;
 
   container.innerHTML = "";
-
+// Skapa element för varje himlakropp
   bodies.forEach(body => {
     if (!body?.name || !body?.type) return;
-
+// Skapa span-element
     const element = document.createElement("span");
 
     // Lägg till klasser baserat på typ och namn
@@ -80,11 +90,11 @@ function renderBodies(bodies) {
 
     // Klickhändelse
     element.addEventListener("click", () => showOverlay(body));
-
+    // Lägg till element i containern
     container.appendChild(element);
   });
 }
-
+// Visa overlay med detaljerad info
 function showOverlay(body) {
   const overlay = document.getElementById("overlay");
   const content = overlay.querySelector("#overlayContent");
@@ -104,7 +114,7 @@ function showOverlay(body) {
   const latin = document.createElement("h4");
   latin.id = "planetLatin";
   latin.textContent = body.latinName || "";
-
+  // Lägg till titlar i header
   header.appendChild(title);
   header.appendChild(latin);
   content.appendChild(header);
@@ -118,7 +128,8 @@ desc.textContent = body.desc || "Ingen beskrivning tillgänglig."; // Fallback o
   // Fakta-lista
   const infoList = document.createElement("ul");
   infoList.id = "planetInfo";
-
+ 
+  // Fakta-lista
   const fields = {
     Omkrets: body.circumference,
     "Avstånd från solen": body.distance,
@@ -128,7 +139,8 @@ desc.textContent = body.desc || "Ingen beskrivning tillgänglig."; // Fallback o
     "Natt-temp": body.temp?.night,
     Månar: body.moons?.join(", ")
   };
-
+  
+ // Fyll fakta-listan
   for (const [label, value] of Object.entries(fields)) {
     if (value === undefined || value === null) continue;
     const li = document.createElement("li");
@@ -145,8 +157,10 @@ desc.textContent = body.desc || "Ingen beskrivning tillgänglig."; // Fallback o
   closeBtn.addEventListener("click", () => overlay.classList.remove("active"));
   content.appendChild(closeBtn);
 
+  // Visa overlay
   overlay.classList.add("active");
 
+  // Klick utanför innehåll stänger overlay
   overlay.addEventListener("click", e => {
     if (e.target === overlay) overlay.classList.remove("active");
   });
