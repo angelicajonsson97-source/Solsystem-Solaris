@@ -186,15 +186,16 @@ h3 {
 /* Stilar för större skärmar */
 
 @media (min-width: 1200px) {
-h1 {
+
+  h1 {
   text-align: right;
-  margin: 2rem 1.25rem 0.5rem 0;
+  margin: 2rem 5rem 0.5rem 0;
   font-size: 2.5rem;
   letter-spacing: 0.5rem;
 }
 h3 {
   text-align: right;
-  margin: 0.5rem 1.25rem 2rem 0;
+  margin: 0.5rem 5rem 2rem 0;
   font-size: 1.5rem;
   letter-spacing: 0.5rem;
   color: #8b6e27;
