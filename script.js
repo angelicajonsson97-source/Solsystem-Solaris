@@ -94,42 +94,28 @@ function renderBodies(bodies) {
     container.appendChild(element);
   });
 }
-// Visa overlay med detaljerad info
-function showOverlay(body) {
+
+// Overlay-element och dess innehåll 
   const overlay = document.getElementById("overlay");
   const content = overlay.querySelector("#overlayContent");
+  const closeBtn = document.getElementById("closeOverlay"); 
 
-  content.innerHTML = ""; // Rensa
+// Visa overlay med detaljerad info
+closeBtn. addEventListener("click", () => overlay.classList.remove("active"));
+overlay.addEventListener("click", e => {
+  if (e.target === overlay) overlay.classList.remove("active");
+});
 
-  // Titelblock
-  const header = document.createElement("article");
-  header.classList.add("overlay-header");
-
-  // Namn
-  const title = document.createElement("h2");
-  title.id = "planetName";
-  title.textContent = body.name;
-
-  // Latinskt namn
-  const latin = document.createElement("h4");
-  latin.id = "planetLatin";
-  latin.textContent = body.latinName || "";
-  // Lägg till titlar i header
-  header.appendChild(title);
-  header.appendChild(latin);
-  content.appendChild(header);
-
-  // Beskrivning
-  const desc = document.createElement("p");
-  desc.id = "planetDesc";
-desc.textContent = body.desc || "Ingen beskrivning tillgänglig."; // Fallback om ingen beskrivning finns
-  content.appendChild(desc);
-
-  // Fakta-lista
-  const infoList = document.createElement("ul");
-  infoList.id = "planetInfo";
+// Fyll overlay med himlakroppsdata
+function showOverlay(body) {
+  content.querySelector("#planetName").textContent = body.name;
+  content.querySelector("#planetLatin").textContent = body.latinName || "";
+  content.querySelector("#planetDesc").textContent = body.desc || "Ingen beskrivning tillgänglig.";
  
-  // Fakta-lista
+  const infoList = content.querySelector("#planetInfo");
+  infoList.innerHTML = "";
+
+  //fakta 
   const fields = {
     Omkrets: body.circumference,
     "Avstånd från solen": body.distance,
@@ -148,22 +134,8 @@ desc.textContent = body.desc || "Ingen beskrivning tillgänglig."; // Fallback o
     infoList.appendChild(li);
   }
 
-  content.appendChild(infoList);
-
-  // Stäng-knapp
-  const closeBtn = document.createElement("button");
-  closeBtn.id = "closeOverlay";
-  closeBtn.textContent = "Stäng";
-  closeBtn.addEventListener("click", () => overlay.classList.remove("active"));
-  content.appendChild(closeBtn);
-
-  // Visa overlay
+    // Visa overlay
   overlay.classList.add("active");
-
-  // Klick utanför innehåll stänger overlay
-  overlay.addEventListener("click", e => {
-    if (e.target === overlay) overlay.classList.remove("active");
-  });
 }
 
 init();
